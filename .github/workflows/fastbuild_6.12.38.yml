@@ -390,6 +390,8 @@ jobs:
           cd common
           wget https://github.com/$GITHUB_REPOSITORY/raw/refs/heads/$GITHUB_REF_NAME/other_patch/cve-2026-43499-rtmutex-6.12.patch
           patch -p1 -F 3 < cve-2026-43499-rtmutex-6.12.patch
+          perl -0pi -e 's/res\s*=\s*strstr\(sym_name,\s*"\.llvm\."\);/res = (char *)strstr(sym_name, ".llvm.");/' tools/lib/bpf/libbpf.c
+          perl -0pi -e "s/next_path\s*=\s*strchr\(s,\s*':'\);/next_path = (char *)strchr(s, ':');/" tools/lib/bpf/libbpf.c
           
       - name: 启用网络功能增强优化配置
         if: inputs.better_net
